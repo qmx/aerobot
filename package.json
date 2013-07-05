@@ -9,7 +9,7 @@
   "author": "Douglas Campos",
   "license": "BSD",
   "dependencies": {
-    "jerk": "~1.1.23",
+    "irc": "~0.3.6",
     "redis": "~0.8.4",
     "express": "~3.3.3",
     "hiredis": "~0.1.15"

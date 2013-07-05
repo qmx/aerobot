@@ -1,15 +1,8 @@
-var jerk = require('jerk'),
-repl = require('repl');
-var options = {
-    server: 'irc.freenode.net',
-    nick: 'aerobot2'
-};
-var bot = jerk(function (j) {
-    j.watch_for(new RegExp('^('+options.nick+'):\s*(.+)') , function (message) {
-        console.log(message.user +' => '+message.match_data[2]);
-        message.say(message.user +': recorded');
-    });
-}).connect(options);
+var irc = require('irc');
+var client = new irc.Client('irc.freenode.net', 'aerobot2', {
+    channels: ['#aerobot-test']
+});
 
-var local = repl.start('>');
-local.context.bot = bot;
+client.addListener('message', function (from, to, message) {
+    console.log("%s %s %s %s", new Date().toISOString(), from, to, message);
+});
