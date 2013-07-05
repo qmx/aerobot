@@ -7,4 +7,9 @@ describe('The Bot', function () {
         bot.addressedToMe('lolz: welcome to the jungle').should.be.ok;
         bot.addressedToMe('meh: not welcome to the jungle').should.not.be.ok;
     });
+    it('knows how to normalize a message', function() {
+        var bot = new Bot('lulz');
+        var result = bot.normalizeMessage('lulz: welcome to the jungle');
+        result.should.equal('welcome to the jungle');
+    });
 });
