@@ -1,8 +1,30 @@
 var irc = require('irc');
-var client = new irc.Client('irc.freenode.net', 'aerobot2', {
-    channels: ['#aerobot-test']
+var Bot = require('./lib/bot').Bot;
+var redis = require('redis');
+
+if (process.env.REDIS_URL) {
+    var redisURL = require('url').parse(process.env.REDIS_URL);
+    var client = redis.createClient(redisURL.port, redisURL.hostname);
+    client.auth(redisURL.auth.split(":")[1]);
+} else {
+    var client = redis.createClient();
+}
+
+var options = {
+    host:'irc.freenode.net',
+    nick:'aerobot2',
+    channels:['#aerobot-test']
+};
+
+var ircConnection  = new irc.Client(options.host, options.nick, {
+    channels: options.channels
 });
 
-client.addListener('message', function (from, to, message) {
-    console.log("%s %s %s %s", new Date().toISOString(), from, to, message);
+var bot = new Bot(options.nick);
+ircConnection.addListener('message', function (from, to, message) {
+    if(bot.addressedToMe(message)) {
+        var key = "aerobot:status:" + options.host + ":" + to + ":" + from;
+        client.hset(key, new Date().toISOString(), bot.normalizeMessage(message), redis.print);
+        console.log("%s %s %s %s", new Date().toISOString(), from, to, message);
+    }
 });
