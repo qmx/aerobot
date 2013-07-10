@@ -4,15 +4,19 @@
  */
 
 var express = require('express')
-  , routes = require('./routes')
-  , user = require('./routes/user')
   , http = require('http')
   , path = require('path')
   , cors = require('cors')
-  , async = require('async') 
-  , redis = require('redis')
-  , client = redis.createClient();
+  , async = require('async')
+  , redis = require('redis');
 
+if (process.env.REDIS_URL) {
+    var redisURL = require('url').parse(process.env.REDIS_URL);
+    var client = redis.createClient(redisURL.port, redisURL.hostname);
+    client.auth(redisURL.auth.split(":")[1]);
+} else {
+    var client = redis.createClient();
+}
 var app = express();
 
 // all environments
