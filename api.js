@@ -48,7 +48,6 @@ app.get('/api/statuses', function (req, res) {
                 callback(null, memo);
             });
         }, function(err, result){
-            console.log(result);
             res.json(result);
         });
     });
