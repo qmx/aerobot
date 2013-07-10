@@ -36,7 +36,10 @@ if ('development' == app.get('env')) {
   app.use(express.errorHandler());
 }
 
-app.get('/', routes.index);
+app.get('/', function (req, res) {
+    res.end("get outta here");
+});
+
 app.get('/api/statuses', function (req, res) {
     client.keys("aerobot:status:*", function (err, reply) {
         async.reduce(reply, {}, function(memo, item, callback) {
