@@ -12,7 +12,8 @@
     "irc": "~0.3.6",
     "redis": "~0.8.4",
     "express": "~3.3.4",
-    "hiredis": "~0.1.15"
+    "cors": "~1.0.1",
+    "async": "~0.2.9"
   },
   "devDependencies": {
     "mocha": "~1.12.0",
