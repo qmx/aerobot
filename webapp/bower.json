@@ -4,7 +4,7 @@
   "dependencies": {
     "jquery": "~1.9.1",
     "handlebars": "1.0.0-rc.4",
-    "ember": "1.0.0-rc.5",
+    "ember": "1.0.0-rc.6",
     "aerogear": "~1.0.1"
   },
   "devDependencies": {}
