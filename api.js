@@ -40,7 +40,7 @@ app.get('/', function (req, res) {
     res.end("get outta here");
 });
 
-app.get('/api/statuses', function (req, res) {
+app.get('/statuses', function (req, res) {
     client.keys("aerobot:status:*", function (err, reply) {
         async.reduce(reply, {}, function(memo, item, callback) {
             client.hgetall(item, function(err, reply) {
