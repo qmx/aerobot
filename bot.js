@@ -22,7 +22,7 @@ var ircConnection  = new irc.Client(options.host, options.nick, {
 
 var bot = new Bot(options.nick);
 ircConnection.addListener('message', function (from, to, message) {
-    if(bot.addressedToMe(message)) {
+    if(bot.isStatusMessage(message)) {
         var key = "aerobot:status:" + options.host + ":" + to + ":" + from;
         client.hset(key, new Date().toISOString(), bot.normalizeMessage(message), redis.print);
         console.log("%s %s %s %s", new Date().toISOString(), from, to, message);
