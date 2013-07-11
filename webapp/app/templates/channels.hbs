@@ -1,0 +1,8 @@
+<div>
+  <ul>
+  {{#each item in model}}
+    <li>{{#linkTo 'users' item.id}}{{item.name}}{{/linkTo}}</li>
+  {{/each}}
+  </ul>
+</div>
+{{outlet}}
