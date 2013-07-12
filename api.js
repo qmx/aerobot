@@ -40,16 +40,20 @@ app.get('/', function (req, res) {
     res.end("get outta here");
 });
 
-app.get('/statuses', function (req, res) {
+function fetchStatuses(cb) {
     client.keys("aerobot:status:*", function (err, reply) {
         async.reduce(reply, {}, function(memo, item, callback) {
             client.hgetall(item, function(err, reply) {
                 memo[item] = reply;
                 callback(null, memo);
             });
-        }, function(err, result){
-            res.json(result);
-        });
+        }, cb);
+    });
+};
+
+app.get('/statuses', function (req, res) {
+    fetchStatuses(function(error, result) {
+        res.json(result);
     });
 });
 
