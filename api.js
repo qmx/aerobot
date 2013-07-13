@@ -15,7 +15,7 @@ if (process.env.REDIS_URL) {
     var client = redis.createClient(redisURL.port, redisURL.hostname);
     client.auth(redisURL.auth.split(":")[1]);
 } else {
-    var client = redis.createClient();
+    //var client = redis.createClient();
 }
 var app = express();
 
@@ -55,6 +55,27 @@ app.get('/statuses', function (req, res) {
     fetchStatuses(function(error, result) {
         res.json(result);
     });
+});
+
+app.get('/api/karma', function (req, res) {
+    res.json([
+        {
+            nick: "qmx",
+            karma: 100
+        },
+        {
+            nick: "abstractj",
+            karma: 100
+        },
+        {
+            nick: "passos",
+            karma: 100
+        },
+        {
+            nick: "kborchers",
+            karma: 100
+        }
+    ]);
 });
 
 http.createServer(app).listen(app.get('port'), function(){
