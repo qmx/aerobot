@@ -2,7 +2,36 @@ var should = require('should');
 var util = require('../lib/util');
 
 describe('Util module', function() {
-    it('knows how to parse redis output accordingly', function(){
+    it('knows how to parse redis factoid output accordingly', function(){
+        var redisOutput = {
+            "aerobot:factoid:irc.freenode.net:#aerobot-test": {
+                "coffee": "amazing",
+                "sleep": "overrated"
+            }
+        }
+        util.parseFactoids(redisOutput).should.eql({
+            "aerobot:factoid": {
+                "irc.freenode.net": {
+                    channels: [
+                        {
+                            channel: "#aerobot-test",
+                            factoids: [
+                                {
+                                    key: "coffee",
+                                    value:"amazing"
+                                },
+                                {
+                                    key: "sleep",
+                                    value:"overrated"
+                                }
+                            ]
+                        }
+                    ]
+                }
+            }
+        });
+    });
+    it('knows how to parse redis statuses output accordingly', function(){
         var redisOutput = {
             "aerobot:status:irc.freenode.net:#aerobot-test:qmx": {
                 "2013-07-10T17:15:42.198Z": "super boring day for a #status",

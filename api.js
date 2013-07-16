@@ -71,7 +71,7 @@ app.get('/statuses', function (req, res) {
 
 app.get('/factoids', function (req, res) {
     fetchFactoids(function(error, result) {
-        res.json(result);
+        res.json(util.parseFactoids(result));
     });
 });
 
