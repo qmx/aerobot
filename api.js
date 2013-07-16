@@ -52,9 +52,26 @@ function fetchStatuses(cb) {
     });
 };
 
+function fetchFactoids(cb) {
+    client.keys("aerobot:factoid:*", function (err, reply) {
+        async.reduce(reply, {}, function(memo, item, callback) {
+            client.hgetall(item, function(err, reply) {
+                memo[item] = reply;
+                callback(null, memo);
+            });
+        }, cb);
+    });
+}
+
 app.get('/statuses', function (req, res) {
     fetchStatuses(function(error, result) {
         res.json(util.parseStatuses(result));
+    });
+});
+
+app.get('/factoids', function (req, res) {
+    fetchFactoids(function(error, result) {
+        res.json(result);
     });
 });
 
