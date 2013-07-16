@@ -54,7 +54,7 @@ function fetchStatuses(cb) {
 
 app.get('/statuses', function (req, res) {
     fetchStatuses(function(error, result) {
-        res.json(util.parseRedisInput(result));
+        res.json(util.parseStatuses(result));
     });
 });
 
