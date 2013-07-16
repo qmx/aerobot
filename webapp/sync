@@ -1,0 +1,2 @@
+#!/bin/sh
+s3cmd sync --rexclude=".git|.DS_Store|.*.swp|.*.scss|scss|.sass-cache" -P dist/ s3://aerobot.qmx.me/
