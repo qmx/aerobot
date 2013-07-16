@@ -8,7 +8,8 @@ var express = require('express')
   , path = require('path')
   , cors = require('cors')
   , async = require('async')
-  , redis = require('redis');
+  , redis = require('redis')
+  , util = require('./lib/util');
 
 if (process.env.REDIS_URL) {
     var redisURL = require('url').parse(process.env.REDIS_URL);
@@ -53,7 +54,7 @@ function fetchStatuses(cb) {
 
 app.get('/statuses', function (req, res) {
     fetchStatuses(function(error, result) {
-        res.json(result);
+        res.json(util.parseRedisInput(result));
     });
 });
 
