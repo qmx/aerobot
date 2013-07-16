@@ -19,4 +19,14 @@ describe('The Bot', function () {
         var result = bot.normalizeMessage('lulz: welcome to the jungle');
         result.should.equal('welcome to the jungle');
     });
+    it('knows how to identify factoid store requests', function(){
+        var bot = new Bot('spongebob');
+        bot.isFactoidStoreRequest('spongebob: cake is a lie').should.be.ok;
+        bot.isFactoidStoreRequest('spongebob: the cake is a truth').should.not.be.ok;
+    });
+    it('knows how to parse factoid store requests', function() {
+        var bot = new Bot('rly');
+        var result = bot.parseFactoidStoreRequest('rly: glwtd is good luck with that dude');
+        result.should.eql({key:'glwtd', value:'good luck with that dude'});
+    });
 });

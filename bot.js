@@ -27,5 +27,11 @@ ircConnection.addListener('message', function (from, to, message) {
         client.hset(key, new Date().toISOString(), bot.normalizeMessage(message), function (err, reply){
             ircConnection.say(to, from + ': recorded your slacking at <dashboard link coming soon>');
         });
+    } else if(bot.isFactoidStoreRequest(message)) {
+        var key = "aerobot:factoids:" + options.host + ":" + to;
+        var request = bot.parseFactoidStoreRequest(message);
+        client.hset(key, request.key, request.value, function (err, reply) {
+            ircConnection.say(to, from + ': kk');
+        });
     }
 });
