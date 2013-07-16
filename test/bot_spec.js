@@ -29,4 +29,14 @@ describe('The Bot', function () {
         var result = bot.parseFactoidStoreRequest('rly: glwtd is good luck with that dude');
         result.should.eql({key:'glwtd', value:'good luck with that dude'});
     });
+    it('knows how to identify factoid removal requests', function(){
+        var bot = new Bot('mnesia');
+        bot.isFactoidRemovalRequest('mnesia: forget glwtd').should.be.ok;
+        bot.isFactoidRemovalRequest("mnesia: don't forget it, mmkay?").should.not.be.ok;
+    });
+    it('knows how to forget factoids', function() {
+        var bot = new Bot('amnesia');
+        var result = bot.parseFactoidRemovalRequest('amnesia: forget glwtd');
+        result.should.eql('glwtd');
+    });
 });
