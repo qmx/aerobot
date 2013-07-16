@@ -39,4 +39,14 @@ describe('The Bot', function () {
         var result = bot.parseFactoidRemovalRequest('amnesia: forget glwtd');
         result.should.eql('glwtd');
     });
+    it('knows how to identify factoid retrieval requests', function (){
+        var bot = new Bot('elephant');
+        bot.isFactoidRetrievalRequest('?glwtd').should.be.ok;
+        bot.isFactoidRetrievalRequest('? glwtd').should.not.be.ok;
+    });
+    it('knows how to parse factoid retrieval requests', function (){
+        var bot = new Bot('elephant');
+        var result = bot.parseFactoidRetrievalRequest('?glwtd');
+        result.should.eql('glwtd');
+    });
 });

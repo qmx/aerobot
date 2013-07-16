@@ -39,5 +39,11 @@ ircConnection.addListener('message', function (from, to, message) {
         client.hdel(key, request, function (err, reply) {
             ircConnection.say(to, from + ': never heard of it!');
         });
+    } else if(bot.isFactoidRetrievalRequest(message)) {
+        var key = "aerobot:factoids:" + options.host + ":" + to;
+        var request = bot.parseFactoidRetrievalRequest(message);
+        client.hget(key, request, function (err, reply) {
+            ircConnection.say(to, from + ': ' + reply);
+        });
     }
 });
