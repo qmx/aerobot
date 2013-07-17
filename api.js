@@ -65,6 +65,20 @@ app.get('/statuses', function (req, res) {
     });
 });
 
+app.get('/statuses/:network', function (req, res) {
+    var network = req.params.network;
+    var searchKey = "aerobot:status:" + network + ":*";
+    var result = {network:network, channels:[]};
+    client.keys(searchKey, function (err, reply) {
+        for(var i = 0; i < reply.length; i++){
+            var channel = util.parseRedisStatusKey(reply[i]).channel;
+            result.channels.push({channel:channel});
+        }
+        result.channels = _.uniq(result.channels, 'channel');
+        res.json(result);
+    });
+});
+
 app.get('/statuses/:network/:channel', function (req, res) {
     var network = req.params.network;
     var channel = req.params.channel;
