@@ -49,4 +49,13 @@ describe('The Bot', function () {
         var result = bot.parseFactoidRetrievalRequest('?glwtd');
         result.should.eql('glwtd');
     });
+    it('knows how to identify karma requests', function () {
+        var bot = new Bot('mule');
+        bot.isKarmaRequest('this was amazing, mule++').should.be.ok;
+    });
+    it('knows how to parse karma requests', function () {
+        var bot = new Bot('platypus');
+        bot.parseKarmaRequest('mnesia++').should.eql({ user:'mnesia', direction:1 });
+        bot.parseKarmaRequest('buster--').should.eql({ user:'buster', direction:-1 });
+    });
 });
