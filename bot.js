@@ -1,5 +1,6 @@
 var irc = require('irc');
 var Bot = require('./lib/bot').Bot;
+var util = require('./lib/util');
 var redis = require('redis');
 
 if (process.env.REDIS_URL) {
@@ -23,24 +24,24 @@ var ircConnection  = new irc.Client(options.host, options.nick, {
 var bot = new Bot(options.nick);
 ircConnection.addListener('message', function (from, to, message) {
     if(bot.isStatusMessage(message)) {
-        var key = "aerobot:status:" + options.host + ":" + to + ":" + from;
+        var key = "aerobot:status:" + options.host + ":" + util.normalizeChannelName(to) + ":" + from;
         client.hset(key, new Date().toISOString(), bot.normalizeMessage(message), function (err, reply){
             ircConnection.say(to, from + ': recorded your slacking at <dashboard link coming soon>');
         });
     } else if(bot.isFactoidStoreRequest(message)) {
-        var key = "aerobot:factoid:" + options.host + ":" + to;
+        var key = "aerobot:factoid:" + options.host + ":" + util.normalizeChannelName(to);
         var request = bot.parseFactoidStoreRequest(message);
         client.hset(key, request.key, request.value, function (err, reply) {
             ircConnection.say(to, from + ': kk');
         });
     } else if(bot.isFactoidRemovalRequest(message)) {
-        var key = "aerobot:factoid:" + options.host + ":" + to;
+        var key = "aerobot:factoid:" + options.host + ":" + util.normalizeChannelName(to);
         var request = bot.parseFactoidRemovalRequest(message);
         client.hdel(key, request, function (err, reply) {
             ircConnection.say(to, from + ': never heard of it!');
         });
     } else if(bot.isFactoidRetrievalRequest(message)) {
-        var key = "aerobot:factoid:" + options.host + ":" + to;
+        var key = "aerobot:factoid:" + options.host + ":" + util.normalizeChannelName(to);
         var request = bot.parseFactoidRetrievalRequest(message);
         client.hget(key, request, function (err, reply) {
             ircConnection.say(to, from + ': ' + reply);

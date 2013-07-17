@@ -2,6 +2,9 @@ var should = require('should');
 var util = require('../lib/util');
 
 describe('Util module', function() {
+    it('knows how to normalize channel names', function () {
+        util.normalizeChannelName('#aerobot-test').should.eql('aerobot-test');
+    });
     it('knows how to parse redis factoid output accordingly', function(){
         var redisOutput = {
             "aerobot:factoid:irc.freenode.net:#aerobot-test": {
