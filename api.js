@@ -1,15 +1,10 @@
-
-/**
- * Module dependencies.
- */
-
-var express = require('express')
-  , http = require('http')
-  , path = require('path')
-  , cors = require('cors')
-  , async = require('async')
-  , redis = require('redis')
-  , util = require('./lib/util');
+var express = require('express'),
+http = require('http'),
+path = require('path'),
+cors = require('cors'),
+async = require('async'),
+redis = require('redis'),
+util = require('./lib/util');
 
 if (process.env.REDIS_URL) {
     var redisURL = require('url').parse(process.env.REDIS_URL);
@@ -34,7 +29,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 // development only
 if ('development' == app.get('env')) {
-  app.use(express.errorHandler());
+    app.use(express.errorHandler());
 }
 
 app.get('/', function (req, res) {
@@ -126,5 +121,5 @@ app.get('/api/karma', function (req, res) {
 });
 
 http.createServer(app).listen(app.get('port'), function(){
-  console.log('Express server listening on port ' + app.get('port'));
+    console.log('Express server listening on port ' + app.get('port'));
 });
