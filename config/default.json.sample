@@ -1,0 +1,11 @@
+{
+  "irc": {
+    "host":"irc.freenode.net",
+    "nick":"myaerobot",
+    "nickserv":{
+      "password":"sekret",
+      "email":"i@myself.land"
+    },
+    "channels":["#aerobot-playground"]
+  }
+}
