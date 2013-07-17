@@ -69,6 +69,27 @@ app.get('/statuses', function (req, res) {
     });
 });
 
+app.get('/statuses/:network/:channel', function (req, res) {
+    var network = req.params.network;
+    var channel = req.params.channel;
+    var searchKey = "aerobot:status:" + network + ":" + channel + ":*";
+    client.keys(searchKey, function (err, reply) {
+        var userName = util.parseRedisStatusKey(reply).user;
+        async.reduce(reply, {channel:channel, users:[]}, function(memo, item, callback) {
+            client.hgetall(item, function (err, statuses) {
+                var user = {user:userName, statuses:[]};
+                for (timestamp in statuses) {
+                    user.statuses.push({timestamp:timestamp, status:statuses[timestamp]});
+                }
+                memo.users.push(user);
+                callback(null, memo);
+            });
+        }, function (err, reply) {
+            res.json(reply);
+        });
+    });
+});
+
 app.get('/factoids', function (req, res) {
     fetchFactoids(function(error, result) {
         res.json(util.parseFactoids(result));

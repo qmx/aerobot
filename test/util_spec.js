@@ -2,6 +2,14 @@ var should = require('should');
 var util = require('../lib/util');
 
 describe('Util module', function() {
+    it('knows how to parse aerobot:status keys', function() {
+        var key = 'aerobot:status:irc.freenode.net:aerobot-test:whatever';
+        util.parseRedisStatusKey(key).should.eql({
+            network: 'irc.freenode.net',
+            channel: 'aerobot-test',
+            user: 'whatever'
+        });
+    });
     it('knows how to normalize channel names', function () {
         util.normalizeChannelName('#aerobot-test').should.eql('aerobot-test');
     });
