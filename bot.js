@@ -51,7 +51,11 @@ ircConnection.addListener('message', function (from, to, message) {
         var key = "aerobot:factoid:" + config.irc.host + ":" + util.normalizeChannelName(to);
         var request = bot.parseFactoidRetrievalRequest(message);
         client.hget(key, request, function (err, reply) {
-            ircConnection.say(to, from + ': ' + reply);
+            if(reply) {
+                ircConnection.say(to, from + ': ' + reply);
+            } else {
+                ircConnection.say(to, from + ': wat?');
+            }
         });
     } else if(bot.isKarmaRequest(message)) {
         var key = "aerobot:karma:" + config.irc.host + ":" + util.normalizeChannelName(to);
