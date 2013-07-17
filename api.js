@@ -81,6 +81,14 @@ app.get('/statuses/:network/:channel', function (req, res) {
                 for (timestamp in statuses) {
                     user.statuses.push({timestamp:timestamp, status:statuses[timestamp]});
                 }
+                user.statuses.sort(function (a, b) {
+                    if (a.timestamp > b.timestamp) {
+                        return -1;
+                    } else if (a.timestamp < b.timestamp) {
+                        return 1;
+                    }
+                    return 0;
+                });
                 memo.users.push(user);
                 callback(null, memo);
             });
