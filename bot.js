@@ -50,8 +50,8 @@ ircConnection.addListener('message', function (from, to, message) {
         var key = "aerobot:karma:" + options.host + ":" + util.normalizeChannelName(to);
         var request = bot.parseKarmaRequest(message);
         client.hincrby(key, request.user, request.direction, function (err, reply) {
-            var actionText = request.direction === 1 ? ' gained ' : ' lost ';
-            ircConnection.say(to, request.user + actionText + ' a level! (Karma: ' + reply + ')');
+            var actionText = request.direction === 1 ? 'gained' : 'lost';
+            ircConnection.say(to, request.user + ' ' + actionText + ' a level! (Karma: ' + reply + ')');
         });
     }
 });
