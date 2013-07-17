@@ -4,6 +4,7 @@ path = require('path'),
 cors = require('cors'),
 async = require('async'),
 redis = require('redis'),
+_ = require('lodash'),
 util = require('./lib/util');
 
 if (process.env.REDIS_URL) {
@@ -69,25 +70,21 @@ app.get('/statuses/:network/:channel', function (req, res) {
     var channel = req.params.channel;
     var searchKey = "aerobot:status:" + network + ":" + channel + ":*";
     client.keys(searchKey, function (err, reply) {
-        var userName = util.parseRedisStatusKey(reply).user;
         async.reduce(reply, {channel:channel, users:[]}, function(memo, item, callback) {
+            var userName = util.parseRedisStatusKey(item).user;
             client.hgetall(item, function (err, statuses) {
                 var user = {user:userName, statuses:[]};
+                var unsortedStatuses = [];
                 for (timestamp in statuses) {
-                    user.statuses.push({timestamp:timestamp, status:statuses[timestamp]});
+                    unsortedStatuses.push({timestamp:timestamp, status:statuses[timestamp]});
                 }
-                user.statuses.sort(function (a, b) {
-                    if (a.timestamp > b.timestamp) {
-                        return -1;
-                    } else if (a.timestamp < b.timestamp) {
-                        return 1;
-                    }
-                    return 0;
-                });
+                user.statuses = _.sortBy(unsortedStatuses, 'timestamp').reverse();
                 memo.users.push(user);
+
                 callback(null, memo);
             });
         }, function (err, reply) {
+            reply.users = _.sortBy(reply.users, 'user');
             res.json(reply);
         });
     });
