@@ -2,6 +2,7 @@ var irc = require('irc');
 var Bot = require('./lib/bot').Bot;
 var util = require('./lib/util');
 var redis = require('redis');
+var _ = require('lodash');
 
 if (process.env.REDIS_URL) {
     var redisURL = require('url').parse(process.env.REDIS_URL);
@@ -65,8 +66,14 @@ ircConnection.addListener('message', function (from, to, message) {
             ircConnection.say(to, request.user + ' ' + actionText + ' a level! (Karma: ' + reply + ')');
         });
     } else if (bot.isKarmaMostRequest(message)) {
+	console.log('most');
 	var key = "aerobot:karma:" + config.irc.host + ":" + util.normalizeChannelName(to);
-
+	client.zrevrange(key, 0, 5, 'WITHSCORES', function(err, reply) {
+		if (!err) {
+			console.log('mapping' );
+			var scores = util.normalizeKarmaScores(reply);
+		}	
+	});
     }
 });
 

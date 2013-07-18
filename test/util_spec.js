@@ -13,6 +13,9 @@ describe('Util module', function() {
     it('knows how to normalize channel names', function () {
         util.normalizeChannelName('#aerobot-test').should.eql('aerobot-test');
     });
+    it('knows how to normalize karma sets', function () {
+        util.normalizeKarmaScores(['summersp',1,'summersbot',0,'summersbot1',-5]).should.eql([{user:'summersp',score:1},{user:'summersbot',score:0},{user:'summersbot1',score:-5}]);
+    });
     it('knows how to parse redis factoid output accordingly', function(){
         var redisOutput = {
             "aerobot:factoid:irc.freenode.net:#aerobot-test": {
