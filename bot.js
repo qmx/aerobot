@@ -18,8 +18,8 @@ if (process.env.AEROBOT_CONFIG) {
         irc:{
             host:'irc.freenode.net',
             nick:'aerobot33',
-        },
-        channels: ['#aerobot-test']
+            channels: ['#aerobot-test']
+        }
     };
 }
 
