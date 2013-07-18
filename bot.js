@@ -66,9 +66,16 @@ ircConnection.addListener('message', function (from, to, message) {
             ircConnection.say(to, request.user + ' ' + actionText + ' a level! (Karma: ' + reply + ')');
         });
     } else if (bot.isKarmaMostRequest(message)) {
-	console.log('most');
 	var key = "aerobot:karma:" + config.irc.host + ":" + util.normalizeChannelName(to);
 	client.zrevrange(key, 0, 5, 'WITHSCORES', function(err, reply) {
+		if (!err) {
+			var scores = util.normalizeKarmaScores(reply);
+                        ircConnection.say(to, util.prettyPrintKarmaScores(scores));
+		}	
+	});
+    } else if (bot.isKarmaLeastRequest(message)) {
+	var key = "aerobot:karma:" + config.irc.host + ":" + util.normalizeChannelName(to);
+	client.zrange(key, 0, 5, 'WITHSCORES', function(err, reply) {
 		if (!err) {
 			var scores = util.normalizeKarmaScores(reply);
                         ircConnection.say(to, util.prettyPrintKarmaScores(scores));
