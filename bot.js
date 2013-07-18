@@ -70,8 +70,8 @@ ircConnection.addListener('message', function (from, to, message) {
 	var key = "aerobot:karma:" + config.irc.host + ":" + util.normalizeChannelName(to);
 	client.zrevrange(key, 0, 5, 'WITHSCORES', function(err, reply) {
 		if (!err) {
-			console.log('mapping' );
 			var scores = util.normalizeKarmaScores(reply);
+                        ircConnection.say(to, util.prettyPrintKarmaScores(scores));
 		}	
 	});
     }

@@ -14,7 +14,11 @@ describe('Util module', function() {
         util.normalizeChannelName('#aerobot-test').should.eql('aerobot-test');
     });
     it('knows how to normalize karma sets', function () {
-        util.normalizeKarmaScores(['summersp',1,'summersbot',0,'summersbot1',-5]).should.eql([{user:'summersp',score:1},{user:'summersbot',score:0},{user:'summersbot1',score:-5}]);
+        util.normalizeKarmaScores(['summersp','1','summersbot','0','summersbot1','-5']).should.eql([{user:'summersp',score:1},{user:'summersbot',score:0},{user:'summersbot1',score:-5}]);
+    });
+    it('knows how to pretty print karma', function () {
+	var lines = util.prettyPrintKarmaScores([{user:'summersp',score:1},{user:'summersbot',score:0},{user:'summersbot1',score:-15}]);
+        lines.should.eql("summersp         1\nsummersbot       0\nsummersbot1    -15\n");
     });
     it('knows how to parse redis factoid output accordingly', function(){
         var redisOutput = {
