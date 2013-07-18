@@ -60,9 +60,10 @@ ircConnection.addListener('message', function (from, to, message) {
     } else if(bot.isKarmaRequest(message)) {
         var key = "aerobot:karma:" + config.irc.host + ":" + util.normalizeChannelName(to);
         var request = bot.parseKarmaRequest(message);
-        client.hincrby(key, request.user, request.direction, function (err, reply) {
+        client.zincrby(key, request.direction, request.user, function (err, reply) {
             var actionText = request.direction === 1 ? 'gained' : 'lost';
             ircConnection.say(to, request.user + ' ' + actionText + ' a level! (Karma: ' + reply + ')');
         });
     }
 });
+
