@@ -64,6 +64,9 @@ ircConnection.addListener('message', function (from, to, message) {
             var actionText = request.direction === 1 ? 'gained' : 'lost';
             ircConnection.say(to, request.user + ' ' + actionText + ' a level! (Karma: ' + reply + ')');
         });
+    } else if (bot.isKarmaMostRequest(message)) {
+	var key = "aerobot:karma:" + config.irc.host + ":" + util.normalizeChannelName(to);
+
     }
 });
 
