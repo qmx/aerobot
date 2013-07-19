@@ -67,7 +67,7 @@ ircConnection.addListener('message', function (from, to, message) {
         });
     } else if (bot.isKarmaBestRequest(message)) {
         var key = "aerobot:karma:" + config.irc.host + ":" + util.normalizeChannelName(to);
-        client.zrevrange(key, 0, 5, 'WITHSCORES', function(err, reply) {
+        client.zrevrange(key, 0, 4, 'WITHSCORES', function(err, reply) {
             if (!err) {
                 var scores = util.normalizeKarmaScores(reply);
                 ircConnection.say(to, util.prettyPrintKarmaScores(scores));
@@ -75,7 +75,7 @@ ircConnection.addListener('message', function (from, to, message) {
         });
     } else if (bot.isKarmaWorstRequest(message)) {
         var key = "aerobot:karma:" + config.irc.host + ":" + util.normalizeChannelName(to);
-        client.zrange(key, 0, 5, 'WITHSCORES', function(err, reply) {
+        client.zrange(key, 0, 4, 'WITHSCORES', function(err, reply) {
             if (!err) {
                 var scores = util.normalizeKarmaScores(reply);
                 ircConnection.say(to, util.prettyPrintKarmaScores(scores));
