@@ -44,6 +44,14 @@ describe('The Bot', function () {
         bot.isFactoidRetrievalRequest('?glwtd').should.be.ok;
         bot.isFactoidRetrievalRequest('? glwtd').should.not.be.ok;
     });
+    it('knows how to identify best/worst karma request', function (){
+        var bot = new Bot('karma');
+        bot.isKarmaBestRequest('karma worst').should.not.be.ok;
+        bot.isKarmaWorstRequest('karma best').should.not.be.ok;
+        bot.isKarmaBestRequest('karma best').should.be.ok;
+        bot.isKarmaWorstRequest('karma worst').should.be.ok;
+    });
+    
     it('knows how to parse factoid retrieval requests', function (){
         var bot = new Bot('elephant');
         var result = bot.parseFactoidRetrievalRequest('?glwtd');

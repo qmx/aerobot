@@ -65,7 +65,7 @@ ircConnection.addListener('message', function (from, to, message) {
             var actionText = request.direction === 1 ? 'gained' : 'lost';
             ircConnection.say(to, request.user + ' ' + actionText + ' a level! (Karma: ' + reply + ')');
         });
-    } else if (bot.isKarmaMostRequest(message)) {
+    } else if (bot.isKarmaBestRequest(message)) {
         var key = "aerobot:karma:" + config.irc.host + ":" + util.normalizeChannelName(to);
         client.zrevrange(key, 0, 5, 'WITHSCORES', function(err, reply) {
             if (!err) {
@@ -73,7 +73,7 @@ ircConnection.addListener('message', function (from, to, message) {
                 ircConnection.say(to, util.prettyPrintKarmaScores(scores));
             }    
         });
-    } else if (bot.isKarmaLeastRequest(message)) {
+    } else if (bot.isKarmaWorstRequest(message)) {
         var key = "aerobot:karma:" + config.irc.host + ":" + util.normalizeChannelName(to);
         client.zrange(key, 0, 5, 'WITHSCORES', function(err, reply) {
             if (!err) {
