@@ -1,8 +1,0 @@
-<div>
-  <ul>
-  {{#each item in channels}}
-    <li><a {{#linkTo 'channels.statuses' network item.channel}}{{item.channel}}{{/linkTo}}</li>
-  {{/each}}
-  </ul>
-</div>
-{{outlet}}

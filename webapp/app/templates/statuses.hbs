@@ -1,8 +1,15 @@
+<h2>Networks and Channels</h2>
 <div>
   <ul>
-  {{#each item in statuses}}
-    <li>{{item}}</li>
+  {{#each network in networks}}
+    <li><strong>{{network.network}}</strong>
+        <ul>
+        {{#each channel in network.channels}}
+            <li>{{#linkTo 'channel' network.network channel.channel}}{{channel.channel}}{{/linkTo}}</li>
+            {{outlet}}
+        {{/each}}
+        </ul>
+    </li>
   {{/each}}
   </ul>
 </div>
-{{outlet}}
