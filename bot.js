@@ -81,6 +81,16 @@ ircConnection.addListener('message', function (from, to, message) {
                 ircConnection.say(to, util.prettyPrintKarmaScores(scores));
             }
         });
+    } else if(bot.isFactoidRetrievalMentionRequest(message)) {
+        var key = "aerobot:factoid:" + config.irc.host + ":" + util.normalizeChannelName(to);
+        var request = bot.parseFactoidRetrievalRequest(bot.parseFactoionOnFactoidMentionRequests(message));
+        var mention = bot.parseMentionOnFactoidMentionRequests(message);
+        client.hget(key, request, function (err, reply) {
+            if(reply) {
+                ircConnection.say(to, mention + ': ' + reply);
+            } else {
+                ircConnection.say(to, from + ': wat?');
+            }
+        });
     }
 });
-
