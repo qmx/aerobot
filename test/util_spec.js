@@ -40,7 +40,7 @@ describe('Util module', function() {
                 "coffee": "amazing",
                 "sleep": "overrated"
             }
-        }
+        };
         util.parseFactoids(redisOutput).should.eql({
             "aerobot:factoid": {
                 "irc.freenode.net": {

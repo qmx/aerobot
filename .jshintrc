@@ -9,6 +9,11 @@
     "trailing": true,
     "globals": {
         "require": true,
-				"process": true
+				"process": true,
+				"describe": true,
+				"it": true,
+				"exports": true,
+				"__dirname": true,
+				"console": true
     }
 }

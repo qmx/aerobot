@@ -51,7 +51,6 @@ describe('The Bot', function () {
         bot.isKarmaBestRequest('karma best').should.be.ok;
         bot.isKarmaWorstRequest('karma worst').should.be.ok;
     });
-    
     it('knows how to parse factoid retrieval requests', function (){
         var bot = new Bot('elephant');
         var result = bot.parseFactoidRetrievalRequest('?glwtd');

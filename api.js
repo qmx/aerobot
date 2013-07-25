@@ -29,7 +29,7 @@ app.use(app.router);
 app.use(express.static(path.join(__dirname, 'public')));
 
 // development only
-if ('development' == app.get('env')) {
+if ('development' === app.get('env')) {
     app.use(express.errorHandler());
 }
 
@@ -46,7 +46,7 @@ function fetchStatuses(cb) {
             });
         }, cb);
     });
-};
+}
 
 function fetchFactoids(cb) {
     client.keys("aerobot:factoid:*", function (err, reply) {
@@ -89,7 +89,7 @@ app.get('/statuses/:network/:channel', function (req, res) {
             client.hgetall(item, function (err, statuses) {
                 var user = {user:userName, statuses:[]};
                 var unsortedStatuses = [];
-                for (timestamp in statuses) {
+                for (var timestamp in statuses) {
                     unsortedStatuses.push({timestamp:timestamp, status:statuses[timestamp]});
                 }
                 user.statuses = _.sortBy(unsortedStatuses, 'timestamp').reverse();
