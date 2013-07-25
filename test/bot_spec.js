@@ -81,45 +81,22 @@ describe('The Bot', function () {
         var result1 = bot.parseFactoidMentionRequests('?redbutton @ john');
         result1.target.should.eql('john');
 
-        var result2 = bot.parseFactoidMentionRequests('?redbutton@ john');
-        result2.should.not.be.ok;
-
-        var result3 = bot.parseFactoidMentionRequests('?redbutton @john');
-        result3.should.not.be.ok;
-
-        var result4 = bot.parseFactoidMentionRequests('?redbutton@john');
-        result4.should.not.be.ok;
-
-        var result5 = bot.parseFactoidMentionRequests('redbutton@john');
-        result5.should.not.be.ok;
-
-        var result6 = bot.parseFactoidMentionRequests('? redbutton@john');
-        result6.should.not.be.ok;
-
-        var result7 = bot.parseFactoidMentionRequests('?redbutton  @john');
-        result7.should.not.be.ok;
+        ['?redbutton @john', '?redbutton@john', '?redbutton@john',
+            'redbutton@john', '? redbutton@john', '?redbutton  @john'].forEach(function(message) {
+            var result = bot.parseFactoidMentionRequests(message);
+            result.should.not.be.ok;
+        });
     });
     it('knows how to parse factoid on factoid requests', function() {
         var bot = new Bot('sunshine');
-        var result1 = bot.parseFactoidMentionRequests('?redbutton @ john');
-        result1.factoid.should.eql('?redbutton');
 
-        var result2 = bot.parseFactoidMentionRequests('?redbutton@ john');
-        result2.should.not.be.ok;
+        var result = bot.parseFactoidMentionRequests('?redbutton @ john');
+        result.factoid.should.eql('?redbutton');
 
-        var result3 = bot.parseFactoidMentionRequests('?redbutton @john');
-        result3.should.not.be.ok;
-
-        var result4 = bot.parseFactoidMentionRequests('?redbutton@john');
-        result4.should.not.be.ok;
-
-        var result5 = bot.parseFactoidMentionRequests('redbutton@john');
-        result5.should.not.be.ok;
-
-        var result6 = bot.parseFactoidMentionRequests('? redbutton@john');
-        result6.should.not.be.ok;
-
-        var result7 = bot.parseFactoidMentionRequests('?redbutton  @john');
-        result7.should.not.be.ok;
+        ['?redbutton @john', '?redbutton@john', '?redbutton@john',
+            'redbutton@john', '? redbutton@john', '?redbutton  @john'].forEach(function(message) {
+            var result = bot.parseFactoidMentionRequests(message);
+            result.should.not.be.ok;
+        });
     });
 });
