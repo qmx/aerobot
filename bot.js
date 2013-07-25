@@ -63,33 +63,10 @@ ircConnection.addListener('message', function (from, to, message) {
                 ircConnection.say(to, from + ': wat?');
             }
         });
-    } else if(bot.isKarmaRequest(message)) {
-        var key = "aerobot:karma:" + config.irc.host + ":" + util.normalizeChannelName(to);
-        var request = bot.parseKarmaRequest(message);
-        client.zincrby(key, request.direction, request.user, function (err, reply) {
-            var actionText = request.direction === 1 ? 'gained' : 'lost';
-            ircConnection.say(to, request.user + ' ' + actionText + ' a level! (Karma: ' + reply + ')');
-        });
-    } else if (bot.isKarmaBestRequest(message)) {
-        var key = "aerobot:karma:" + config.irc.host + ":" + util.normalizeChannelName(to);
-        client.zrevrange(key, 0, 4, 'WITHSCORES', function(err, reply) {
-            if (!err) {
-                var scores = util.normalizeKarmaScores(reply);
-                ircConnection.say(to, util.prettyPrintKarmaScores(scores));
-            }    
-        });
-    } else if (bot.isKarmaWorstRequest(message)) {
-        var key = "aerobot:karma:" + config.irc.host + ":" + util.normalizeChannelName(to);
-        client.zrange(key, 0, 4, 'WITHSCORES', function(err, reply) {
-            if (!err) {
-                var scores = util.normalizeKarmaScores(reply);
-                ircConnection.say(to, util.prettyPrintKarmaScores(scores));
-            }
-        });
     } else if(bot.isFactoidRetrievalMentionRequest(message)) {
         var key = "aerobot:factoid:" + config.irc.host + ":" + util.normalizeChannelName(to);
         var request = bot.parseFactoidMentionRequests(message);
-        var factoidRequest = bot.parseFactoidRetrievalRequest(request.factoid)
+        var factoidRequest = bot.parseFactoidRetrievalRequest(request.factoid);
         client.hget(key, factoidRequest, function (err, reply) {
             if(reply) {
                 ircConnection.say(to, request.target + ': ' + reply);
