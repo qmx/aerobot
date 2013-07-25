@@ -69,9 +69,9 @@ describe('The Bot', function () {
     it('knows how to identify factoid retrieval with mention requests', function (){
         var bot = new Bot('sunshine');
         bot.isFactoidRetrievalMentionRequest('?redbutton @ john').should.be.ok;
-        bot.isFactoidRetrievalMentionRequest('?redbutton@ john').should.be.ok;
-        bot.isFactoidRetrievalMentionRequest('?redbutton @john').should.be.ok;
-        bot.isFactoidRetrievalMentionRequest('?redbutton@john').should.be.ok;
+        bot.isFactoidRetrievalMentionRequest('?redbutton@ john').should.not.be.ok;
+        bot.isFactoidRetrievalMentionRequest('?redbutton @john').should.not.be.ok;
+        bot.isFactoidRetrievalMentionRequest('?redbutton@john').should.not.be.ok;
         bot.isFactoidRetrievalMentionRequest('redbutton@john').should.not.be.ok;
         bot.isFactoidRetrievalMentionRequest('? redbutton@john').should.not.be.ok;
         bot.isFactoidRetrievalMentionRequest('?redbutton  @john').should.not.be.ok;
@@ -82,13 +82,22 @@ describe('The Bot', function () {
         result1.target.should.eql('john');
 
         var result2 = bot.parseFactoidMentionRequests('?redbutton@ john');
-        result2.target.should.eql('john');
+        result2.should.not.be.ok;
 
         var result3 = bot.parseFactoidMentionRequests('?redbutton @john');
-        result3.target.should.eql('john');
+        result3.should.not.be.ok;
 
         var result4 = bot.parseFactoidMentionRequests('?redbutton@john');
-        result4.target.should.eql('john');
+        result4.should.not.be.ok;
+
+        var result5 = bot.parseFactoidMentionRequests('redbutton@john');
+        result5.should.not.be.ok;
+
+        var result6 = bot.parseFactoidMentionRequests('? redbutton@john');
+        result6.should.not.be.ok;
+
+        var result7 = bot.parseFactoidMentionRequests('?redbutton  @john');
+        result7.should.not.be.ok;
     });
     it('knows how to parse factoid on factoid requests', function() {
         var bot = new Bot('sunshine');
@@ -96,12 +105,21 @@ describe('The Bot', function () {
         result1.factoid.should.eql('?redbutton');
 
         var result2 = bot.parseFactoidMentionRequests('?redbutton@ john');
-        result2.factoid.should.eql('?redbutton');
+        result2.should.not.be.ok;
 
         var result3 = bot.parseFactoidMentionRequests('?redbutton @john');
-        result3.factoid.should.eql('?redbutton');
+        result3.should.not.be.ok;
 
         var result4 = bot.parseFactoidMentionRequests('?redbutton@john');
-        result4.factoid.should.eql('?redbutton');
+        result4.should.not.be.ok;
+
+        var result5 = bot.parseFactoidMentionRequests('redbutton@john');
+        result5.should.not.be.ok;
+
+        var result6 = bot.parseFactoidMentionRequests('? redbutton@john');
+        result6.should.not.be.ok;
+
+        var result7 = bot.parseFactoidMentionRequests('?redbutton  @john');
+        result7.should.not.be.ok;
     });
 });
