@@ -20,7 +20,7 @@ if (process.env.AEROBOT_CONFIG) {
     var config = {
         irc:{
             host:'irc.freenode.net',
-            nick:'aerobot33',
+            nick:'aerobot_qmx',
             channels: ['#aerobot-test']
         }
     };
@@ -35,44 +35,5 @@ var bot = new Bot(config.irc.nick);
 ircConnection.addListener('message', function (from, to, message) {
     for (var handler in handlers) {
         handlers[handler](config, ircConnection, bot, client, from, to, message);
-    }
-    if(bot.isStatusMessage(message)) {
-        var key = "aerobot:status:" + config.irc.host + ":" + util.normalizeChannelName(to) + ":" + from;
-        client.hset(key, new Date().toISOString(), bot.normalizeMessage(message), function (err, reply){
-            ircConnection.say(to, from + ': recorded your slacking at <dashboard link coming soon>');
-        });
-    } else if(bot.isFactoidStoreRequest(message)) {
-        var key = "aerobot:factoid:" + config.irc.host + ":" + util.normalizeChannelName(to);
-        var request = bot.parseFactoidStoreRequest(message);
-        client.hset(key, request.key, request.value, function (err, reply) {
-            ircConnection.say(to, from + ': kk');
-        });
-    } else if(bot.isFactoidRemovalRequest(message)) {
-        var key = "aerobot:factoid:" + config.irc.host + ":" + util.normalizeChannelName(to);
-        var request = bot.parseFactoidRemovalRequest(message);
-        client.hdel(key, request, function (err, reply) {
-            ircConnection.say(to, from + ': never heard of it!');
-        });
-    } else if(bot.isFactoidRetrievalRequest(message)) {
-        var key = "aerobot:factoid:" + config.irc.host + ":" + util.normalizeChannelName(to);
-        var request = bot.parseFactoidRetrievalRequest(message);
-        client.hget(key, request, function (err, reply) {
-            if(reply) {
-                ircConnection.say(to, from + ': ' + reply);
-            } else {
-                ircConnection.say(to, from + ': wat?');
-            }
-        });
-    } else if(bot.isFactoidRetrievalMentionRequest(message)) {
-        var key = "aerobot:factoid:" + config.irc.host + ":" + util.normalizeChannelName(to);
-        var request = bot.parseFactoidMentionRequests(message);
-        var factoidRequest = bot.parseFactoidRetrievalRequest(request.factoid);
-        client.hget(key, factoidRequest, function (err, reply) {
-            if(reply) {
-                ircConnection.say(to, request.target + ': ' + reply);
-            } else {
-                ircConnection.say(to, from + ': wat?');
-            }
-        });
     }
 });

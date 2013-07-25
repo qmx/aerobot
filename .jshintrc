@@ -9,6 +9,7 @@
     "trailing": true,
     "globals": {
         "require": true,
+        "module": true,
 				"process": true,
 				"describe": true,
 				"it": true,
