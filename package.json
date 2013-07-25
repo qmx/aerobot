@@ -4,7 +4,10 @@
   "description": "",
   "main": "bot.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "blanket": {
+      "pattern": "lib",
+      "data-cover-never": "node_modules"
+    }
   },
   "author": "Douglas Campos",
   "license": "BSD",
@@ -21,7 +24,8 @@
     "mocha": "~1.12.0",
     "should": "~1.2.2",
     "jshint": "~2.1.4",
-    "grunt-contrib-jshint": "~0.6.0"
+    "grunt-contrib-jshint": "~0.6.0",
+    "grunt-mocha-cov": "0.0.7"
   },
   "engines": {
     "node": "0.10.x",

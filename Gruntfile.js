@@ -12,12 +12,31 @@ module.exports = function(grunt) {
                     jshintrc: ".jshintrc"
                 }
             }
+        },
+        mochacov: {
+            coverage: {
+                options: {
+                    coverage: true,
+                    reporter: 'html-cov',
+                    output: 'coverage.html'
+                }
+            },
+            test: {
+                options: {
+                    reporter: 'spec'
+                }
+            },
+            options: {
+                files: './test/*.js'
+            }
         }
     });
 
     // grunt-contrib tasks
     grunt.loadNpmTasks('grunt-contrib-jshint');
+    grunt.loadNpmTasks('grunt-mocha-cov');
 
     // Default task
-    grunt.registerTask('default', ['jshint']);
+    grunt.registerTask('default', ['jshint', 'mochacov:test', 'mochacov:coverage']);
+    grunt.registerTask('coverage', ['jshint', 'mochacov:test']);
 };
