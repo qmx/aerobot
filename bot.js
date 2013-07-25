@@ -83,11 +83,11 @@ ircConnection.addListener('message', function (from, to, message) {
         });
     } else if(bot.isFactoidRetrievalMentionRequest(message)) {
         var key = "aerobot:factoid:" + config.irc.host + ":" + util.normalizeChannelName(to);
-        var request = bot.parseFactoidRetrievalRequest(bot.parseFactoionOnFactoidMentionRequests(message));
-        var mention = bot.parseMentionOnFactoidMentionRequests(message);
-        client.hget(key, request, function (err, reply) {
+        var request = bot.parseFactoidMentionRequests(message);
+        var factoidRequest = bot.parseFactoidRetrievalRequest(request.factoid)
+        client.hget(key, factoidRequest, function (err, reply) {
             if(reply) {
-                ircConnection.say(to, mention + ': ' + reply);
+                ircConnection.say(to, request.target + ': ' + reply);
             } else {
                 ircConnection.say(to, from + ': wat?');
             }

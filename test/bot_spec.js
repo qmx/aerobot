@@ -78,30 +78,30 @@ describe('The Bot', function () {
     });
     it('knows how to parse mention on factoid requests', function() {
         var bot = new Bot('sunshine');
-        var result1 = bot.parseMentionOnFactoidMentionRequests('?redbutton @ john');
-        result1.should.eql('john');
+        var result1 = bot.parseFactoidMentionRequests('?redbutton @ john');
+        result1.target.should.eql('john');
 
-        var result2 = bot.parseMentionOnFactoidMentionRequests('?redbutton@ john');
-        result2.should.eql('john');
+        var result2 = bot.parseFactoidMentionRequests('?redbutton@ john');
+        result2.target.should.eql('john');
 
-        var result3 = bot.parseMentionOnFactoidMentionRequests('?redbutton @john');
-        result3.should.eql('john');
+        var result3 = bot.parseFactoidMentionRequests('?redbutton @john');
+        result3.target.should.eql('john');
 
-        var result4 = bot.parseMentionOnFactoidMentionRequests('?redbutton@john');
-        result4.should.eql('john');
+        var result4 = bot.parseFactoidMentionRequests('?redbutton@john');
+        result4.target.should.eql('john');
     });
     it('knows how to parse factoid on factoid requests', function() {
         var bot = new Bot('sunshine');
-        var result1 = bot.parseFactoionOnFactoidMentionRequests('?redbutton @ john');
-        result1.should.eql('?redbutton');
+        var result1 = bot.parseFactoidMentionRequests('?redbutton @ john');
+        result1.factoid.should.eql('?redbutton');
 
-        var result2 = bot.parseFactoionOnFactoidMentionRequests('?redbutton@ john');
-        result2.should.eql('?redbutton');
+        var result2 = bot.parseFactoidMentionRequests('?redbutton@ john');
+        result2.factoid.should.eql('?redbutton');
 
-        var result3 = bot.parseFactoionOnFactoidMentionRequests('?redbutton @john');
-        result3.should.eql('?redbutton');
+        var result3 = bot.parseFactoidMentionRequests('?redbutton @john');
+        result3.factoid.should.eql('?redbutton');
 
-        var result4 = bot.parseFactoionOnFactoidMentionRequests('?redbutton@john');
-        result4.should.eql('?redbutton');
+        var result4 = bot.parseFactoidMentionRequests('?redbutton@john');
+        result4.factoid.should.eql('?redbutton');
     });
 });
