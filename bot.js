@@ -3,6 +3,8 @@ var Bot = require('./lib/bot').Bot;
 var util = require('./lib/util');
 var redis = require('redis');
 var _ = require('lodash');
+var requireDir = require('require-dir');
+var handlers = requireDir('./lib/handlers');
 
 if (process.env.REDIS_URL) {
     var redisURL = require('url').parse(process.env.REDIS_URL);
@@ -31,6 +33,9 @@ var ircConnection  = new irc.Client(config.irc.host, config.irc.nick, {
 var bot = new Bot(config.irc.nick);
 
 ircConnection.addListener('message', function (from, to, message) {
+    for (var handler in handlers) {
+        handlers[handler](config, ircConnection, bot, client, from, to, message);
+    }
     if(bot.isStatusMessage(message)) {
         var key = "aerobot:status:" + config.irc.host + ":" + util.normalizeChannelName(to) + ":" + from;
         client.hset(key, new Date().toISOString(), bot.normalizeMessage(message), function (err, reply){
