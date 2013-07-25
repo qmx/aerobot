@@ -66,4 +66,37 @@ describe('The Bot', function () {
         bot.parseKarmaRequest('mnesia++').should.eql({ user:'mnesia', direction:1 });
         bot.parseKarmaRequest('buster--').should.eql({ user:'buster', direction:-1 });
     });
+    it('knows how to identify factoid retrieval with mention requests', function (){
+        var bot = new Bot('sunshine');
+        bot.isFactoidRetrievalMentionRequest('?redbutton @ john').should.be.ok;
+        bot.isFactoidRetrievalMentionRequest('?redbutton@ john').should.not.be.ok;
+        bot.isFactoidRetrievalMentionRequest('?redbutton @john').should.not.be.ok;
+        bot.isFactoidRetrievalMentionRequest('?redbutton@john').should.not.be.ok;
+        bot.isFactoidRetrievalMentionRequest('redbutton@john').should.not.be.ok;
+        bot.isFactoidRetrievalMentionRequest('? redbutton@john').should.not.be.ok;
+        bot.isFactoidRetrievalMentionRequest('?redbutton  @john').should.not.be.ok;
+    });
+    it('knows how to parse mention on factoid requests', function() {
+        var bot = new Bot('sunshine');
+        var result1 = bot.parseFactoidMentionRequests('?redbutton @ john');
+        result1.target.should.eql('john');
+
+        ['?redbutton @john', '?redbutton@john', '?redbutton@john',
+            'redbutton@john', '? redbutton@john', '?redbutton  @john'].forEach(function(message) {
+            var result = bot.parseFactoidMentionRequests(message);
+            result.should.not.be.ok;
+        });
+    });
+    it('knows how to parse factoid on factoid requests', function() {
+        var bot = new Bot('sunshine');
+
+        var result = bot.parseFactoidMentionRequests('?redbutton @ john');
+        result.factoid.should.eql('?redbutton');
+
+        ['?redbutton @john', '?redbutton@john', '?redbutton@john',
+            'redbutton@john', '? redbutton@john', '?redbutton  @john'].forEach(function(message) {
+            var result = bot.parseFactoidMentionRequests(message);
+            result.should.not.be.ok;
+        });
+    });
 });
