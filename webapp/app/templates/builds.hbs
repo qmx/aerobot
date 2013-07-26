@@ -1,0 +1,6 @@
+<h2>Travis Build Status</h2>
+<ul>
+    {{#each repository in repositories}}
+    <li>{{repository.repo}} - {{repository.statusMessage}}</li>
+    {{/each}}
+</ul>

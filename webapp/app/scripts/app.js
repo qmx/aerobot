@@ -7,6 +7,13 @@ App.pipeline = AeroGear.Pipeline({
         endpoint: "statuses"
     }
 });
+App.buildsPipeline = AeroGear.Pipeline({
+    name: "builds",
+    settings: {
+        baseURL: "http://api.tashboard.qmx.me/",
+        endpoint: "builds"
+    }
+});
 
 require('scripts/routes/*');
 //require('scripts/controllers/*');
