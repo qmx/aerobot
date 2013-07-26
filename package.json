@@ -4,6 +4,7 @@
   "description": "",
   "main": "bot.js",
   "scripts": {
+    "test": "grunt",
     "blanket": {
       "pattern": "lib",
       "data-cover-never": "node_modules"
