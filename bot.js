@@ -34,6 +34,6 @@ var bot = new Bot(config.irc.nick);
 
 ircConnection.addListener('message', function (from, to, message) {
     for (var handler in handlers) {
-        handlers[handler](config, ircConnection, bot, client, from, to, message);
+        handlers[handler](config, ircConnection, bot, db, client, from, to, message);
     }
 });
