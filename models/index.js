@@ -14,7 +14,8 @@ if (!global.hasOwnProperty('db')) {
 
     global.db = {
         Sequelize: Sequelize,
-        sequelize: sequelize
+        sequelize: sequelize,
+        Message: sequelize.import(__dirname + '/message')
     }
 }
 
