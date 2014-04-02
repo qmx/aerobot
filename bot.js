@@ -5,7 +5,7 @@ var redis = require('redis');
 var _ = require('lodash');
 var requireDir = require('require-dir');
 var handlers = requireDir('./lib/handlers');
-
+var db = require('./models');
 if (process.env.REDIS_URL) {
     var redisURL = require('url').parse(process.env.REDIS_URL);
     var client = redis.createClient(redisURL.port, redisURL.hostname);
