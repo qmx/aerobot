@@ -4,8 +4,7 @@ module.exports = function(sequelize, DataTypes) {
         channel: DataTypes.STRING,
         sender: DataTypes.STRING,
         recipient: DataTypes.STRING,
-        message: DataTypes.TEXT,
-        delivered: DataTypes.BOOLEAN
+        message: DataTypes.TEXT
     }, {
         tableName: 'messages',
         updatedAt: 'updated_at',
