@@ -22,7 +22,8 @@
     "sprintf": "~0.1.1",
     "require-dir": "~0.1.0",
     "sequelize": "^1.7.0",
-    "pg": "^2.11.1"
+    "pg": "^2.11.1",
+    "moment": "^2.5.1"
   },
   "devDependencies": {
     "mocha": "~1.12.0",
