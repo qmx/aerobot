@@ -104,4 +104,12 @@ describe('The Bot', function () {
             assert.notOk(bot.parseFactoidMentionRequests(message));
         });
     });
+    it('knows how to parse and identify message store requests', function() {
+        var bot = new Bot('matula');
+        var msg = 'matula: tell qmx you\'re a slacker!';
+        assert.ok(bot.isMessageStoreRequest(msg));
+        var result1 = bot.parseMessageStoreRequest(msg);
+        assert.equal(result1.recipient, 'qmx');
+        assert.equal(result1.message, 'you\'re a slacker!');
+    });
 });
