@@ -13,13 +13,16 @@ module.exports = {
                 type: DataTypes.DATE
             },
             network: {
-                type: DataTypes.STRING
+                type: DataTypes.STRING,
+                allowNull: false
             },
             channel: {
-                type: DataTypes.STRING
+                type: DataTypes.STRING,
+                allowNull: false
             },
             term: {
-                type: DataTypes.STRING
+                type: DataTypes.STRING,
+                allowNull: false
             },
             meaning: {
                 type: DataTypes.STRING
