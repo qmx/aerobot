@@ -16,17 +16,17 @@ describe('Util module', function() {
     it('knows how to normalize karma sets', function () {
         var scores = ['summersp','1','summersbot','0','summersbot1','-5'];
         var normalScores = [
-            {user:'summersp',score:1},
-            {user:'summersbot',score:0},
-            {user:'summersbot1',score:-5}
+            {nick:'summersp',score:1},
+            {nick:'summersbot',score:0},
+            {nick:'summersbot1',score:-5}
         ];
         expect(util.normalizeKarmaScores(scores)).to.eql(normalScores);
     });
     it('knows how to pretty print karma', function () {
         var scores = [
-            {user:'summersp',score:1},
-            {user:'summersbot',score:0},
-            {user:'summersbot1',score:-15}
+            {nick:'summersp',score:1},
+            {nick:'summersbot',score:0},
+            {nick:'summersbot1',score:-15}
         ];
 
         var scoresString = "summersp         1\nsummersbot       0\nsummersbot1    -15\n";
