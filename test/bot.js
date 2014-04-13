@@ -68,6 +68,11 @@ describe('The Bot', function () {
         var bot = new Bot('ferb');
         assert.notOk(bot.isValidKarmaRequest('larry', bot.parseKarmaRequest('I am awesome, thus larry++')));
     });
+    it('ignores case while processing karma', function () {
+        var bot = new Bot('doofenschmirtz');
+        var request = bot.parseKarmaRequest('ignoring case is a must, FOO++');
+        assert.equal(request.user, 'foo');
+    });
     it('allows you to downvote yourself', function() {
         var bot = new Bot('phineas');
         assert.ok(bot.isValidKarmaRequest('larry', bot.parseKarmaRequest('whoops, larry--')));
