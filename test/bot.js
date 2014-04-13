@@ -64,6 +64,14 @@ describe('The Bot', function () {
         var bot = new Bot('mule');
         assert.ok(bot.isKarmaRequest('this was amazing, mule++'));
     });
+    it('knows when someone is trying to cheat karma', function() {
+        var bot = new Bot('ferb');
+        assert.notOk(bot.isValidKarmaRequest('larry', bot.parseKarmaRequest('I am awesome, thus larry++')));
+    });
+    it('allows you to downvote yourself', function() {
+        var bot = new Bot('phineas');
+        assert.ok(bot.isValidKarmaRequest('larry', bot.parseKarmaRequest('whoops, larry--')));
+    });
     it('knows how to parse karma requests', function () {
         var bot = new Bot('platypus');
         assert.deepEqual(bot.parseKarmaRequest('mnesia++'), { user:'mnesia', direction:1 });
