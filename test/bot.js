@@ -67,20 +67,23 @@ describe('The Bot', function () {
     it('knows when someone is trying to cheat karma', function() {
         var bot = new Bot('ferb');
         assert.notOk(bot.isValidKarmaRequest('larry', bot.parseKarmaRequest('I am awesome, thus larry++')));
+        assert.notOk(bot.isValidKarmaRequest('larry', bot.parseKarmaRequest('I am awesome, thus karma fest! qmx-- larry++')));
     });
     it('ignores case while processing karma', function () {
         var bot = new Bot('doofenschmirtz');
         var request = bot.parseKarmaRequest('ignoring case is a must, FOO++');
-        assert.equal(request.user, 'foo');
+        assert.equal(request[0].user, 'foo');
     });
     it('allows you to downvote yourself', function() {
         var bot = new Bot('phineas');
         assert.ok(bot.isValidKarmaRequest('larry', bot.parseKarmaRequest('whoops, larry--')));
+        assert.notOk(bot.isValidKarmaRequest('larry', bot.parseKarmaRequest('whoops, larry++')));
+        assert.notOk(bot.isValidKarmaRequest('larry', bot.parseKarmaRequest('charlie-- larry++')));
     });
     it('knows how to parse karma requests', function () {
         var bot = new Bot('platypus');
-        assert.deepEqual(bot.parseKarmaRequest('mnesia++'), { user:'mnesia', direction:1 });
-        assert.deepEqual(bot.parseKarmaRequest('buster--'), { user:'buster', direction:-1 });
+        assert.deepEqual(bot.parseKarmaRequest('mnesia++'), [ { user:'mnesia', direction:1 } ]);
+        assert.deepEqual(bot.parseKarmaRequest('buster--'), [ { user:'buster', direction:-1 } ]);
     });
     it('knows what a karma fest is', function() {
         var bot = new Bot('larry');
