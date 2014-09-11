@@ -82,6 +82,15 @@ describe('The Bot', function () {
         assert.deepEqual(bot.parseKarmaRequest('mnesia++'), { user:'mnesia', direction:1 });
         assert.deepEqual(bot.parseKarmaRequest('buster--'), { user:'buster', direction:-1 });
     });
+    it('knows what a karma fest is', function() {
+        var bot = new Bot('larry');
+        var req = bot.parseKarmaRequest('mnesia++ buster++ qmx-- are rocking the bot today');
+        assert.deepEqual(req, [
+            { user:'mnesia', direction:1 },
+            { user:'buster', direction:1 },
+            { user:'qmx', direction:-1 }
+        ]);
+    });
     it('knows how to identify factoid retrieval with mention requests', function (){
         var bot = new Bot('sunshine');
         assert.ok(bot.isFactoidRetrievalMentionRequest('?redbutton @ john'));
